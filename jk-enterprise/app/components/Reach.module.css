@@ -1,0 +1,196 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+}
+
+.textContent {
+    flex: 1;
+}
+
+.label {
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.heading {
+    font-size: 3rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.description {
+    color: var(--text-muted);
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.cityList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.cityTag {
+    background: var(--surface);
+    color: var(--primary);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+}
+
+.cityTag:hover,
+.activeTag {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary);
+}
+
+.cityTag:hover .pin,
+.activeTag .pin {
+    color: var(--accent);
+}
+
+.pin {
+    color: var(--accent);
+    transition: color 0.2s;
+}
+
+.moreTag {
+    padding: 0.5rem 1rem;
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.mapContainer {
+    flex: 1;
+    height: 500px;
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.mapVisual {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mapImage {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.mapImage:hover {
+    opacity: 1;
+}
+
+/* Dots and tooltips remain the same, overlaying the image */
+
+.mapPath {
+    fill: var(--primary-light);
+    opacity: 0.1;
+    stroke: var(--primary);
+    stroke-width: 2;
+    transition: all 0.3s;
+}
+
+.mapPath:hover {
+    opacity: 0.2;
+}
+
+.mapLabel {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--primary);
+    opacity: 0.05;
+    text-transform: uppercase;
+    z-index: 0;
+}
+
+.dot {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: var(--primary);
+    /* Darker non-active dots for visibility */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s;
+    cursor: pointer;
+    z-index: 10;
+    border: 2px solid white;
+}
+
+.activeDot {
+    background: var(--accent);
+    width: 18px;
+    /* Slightly larger */
+    height: 18px;
+    box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.3);
+    z-index: 20;
+}
+
+.tooltip {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    pointer-events: none;
+    font-weight: 600;
+    box-shadow: var(--shadow-md);
+}
+
+/* Triangle for tooltip */
+.tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid var(--primary);
+}
+
+@media (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
+}

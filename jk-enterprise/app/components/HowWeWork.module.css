@@ -1,0 +1,243 @@
+.bg {
+    background-color: var(--background);
+}
+
+.header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 4rem;
+}
+
+.label {
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.heading {
+    font-size: 3rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.subheading {
+    color: var(--text-muted);
+    font-size: 1.125rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Force 2 columns for the snake flow */
+    gap: 4rem 2rem;
+    /* Larger vertical gap for the down arrow */
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.stepCard {
+    background: var(--surface);
+    padding: 2.5rem 2rem;
+    border-radius: var(--radius-xl);
+    position: relative;
+    overflow: visible;
+    /* Required for arrows to show outside */
+    height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.stepCard:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
+}
+
+.stepNumber {
+    position: absolute;
+    top: -1rem;
+    right: -1rem;
+    font-size: 6rem;
+    font-weight: 900;
+    color: var(--primary);
+    opacity: 0.05;
+    line-height: 1;
+    z-index: 0;
+}
+
+.iconWrapper {
+    width: 70px;
+    height: 70px;
+    background: var(--surface-hover);
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+    box-shadow: var(--shadow-sm);
+}
+
+.stepTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+    position: relative;
+    z-index: 1;
+}
+
+.stepDesc {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+}
+
+/* Base Arrow Style */
+.stepCard::after {
+    font-family: system-ui, sans-serif;
+    position: absolute;
+    font-size: 3rem;
+    /* Larger arrow */
+    color: var(--accent);
+    opacity: 0.8;
+    z-index: 10;
+    pointer-events: none;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 1 -> 2 (Right Arrow) */
+.grid>div:nth-child(1) .stepCard::after {
+    content: "→";
+    right: -1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: pulseRight 1.5s infinite ease-in-out;
+}
+
+/* 2 -> 3 (Down Arrow) */
+/* Re-ordering for Snake Layout: 1 2 / 4 3 */
+.grid>div:nth-child(3) {
+    order: 4;
+    /* Visually 4th position (Bottom Right) */
+}
+
+.grid>div:nth-child(4) {
+    order: 3;
+    /* Visually 3rd position (Bottom Left) */
+}
+
+/* Now targeting logical 2 (Top Right) -> logical 3 (Bottom Right) */
+.grid>div:nth-child(2) .stepCard::after {
+    content: "↓";
+    bottom: -2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    top: auto;
+    right: auto;
+    animation: pulseDown 1.5s infinite ease-in-out;
+}
+
+/* 3 -> 4 (Left Arrow) */
+/* Logical 3 is now visually Bottom Right. It points Left to Logical 4 (Bottom Left) */
+.grid>div:nth-child(3) .stepCard::after {
+    content: "←";
+    left: -1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    right: auto;
+    animation: pulseLeft 1.5s infinite ease-in-out;
+}
+
+/* 4 (End) */
+.grid>div:nth-child(4) .stepCard::after {
+    content: none;
+}
+
+/* Animations */
+@keyframes pulseRight {
+
+    0%,
+    100% {
+        transform: translate(0, -50%);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translate(10px, -50%);
+        opacity: 1;
+    }
+}
+
+@keyframes pulseDown {
+
+    0%,
+    100% {
+        transform: translate(-50%, 0);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translate(-50%, 10px);
+        opacity: 1;
+    }
+}
+
+@keyframes pulseLeft {
+
+    0%,
+    100% {
+        transform: translate(0, -50%);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translate(-10px, -50%);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    /* Reset order for mobile stack */
+    .grid>div:nth-child(3),
+    .grid>div:nth-child(4) {
+        order: unset;
+    }
+
+    /* All arrows point down on mobile (except last) */
+    .grid>div:nth-child(1) .stepCard::after,
+    .grid>div:nth-child(2) .stepCard::after,
+    .grid>div:nth-child(3) .stepCard::after {
+        content: "↓";
+        right: auto;
+        left: 50%;
+        top: auto;
+        bottom: -2.5rem;
+        transform: translateX(-50%);
+        animation: pulseDown 1.5s infinite ease-in-out;
+    }
+
+    .grid>div:nth-child(4) .stepCard::after {
+        content: none;
+    }
+}
