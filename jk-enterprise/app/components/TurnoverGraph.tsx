@@ -1,5 +1,5 @@
 'use client';
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Cell, LabelList } from 'recharts';
 import styles from './TurnoverGraph.module.css';
 
 const data = [
@@ -16,26 +16,55 @@ export default function TurnoverGraph() {
             <div className="container">
                 <div className={styles.header}>
                     <h2 className={styles.heading}>Consistent <span className="text-gradient">Growth</span></h2>
-                    <p className={styles.subheading}>Our yearly turnover reflects our commitment and client trust.</p>
+                    <p className={styles.subheading}>Year-on-year financial performance reflecting our market strength.</p>
                 </div>
 
                 <div className={styles.chartContainer}>
                     <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                        <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
                             <defs>
-                                <linearGradient id="colorTurnover" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.8} />
-                                    <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
+                                <linearGradient id="colorBar" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor="#ff9f43" stopOpacity={1} />
+                                    <stop offset="100%" stopColor="#ff6b6b" stopOpacity={1} />
                                 </linearGradient>
                             </defs>
-                            <XAxis dataKey="year" stroke="#94a3b8" />
-                            <YAxis stroke="#94a3b8" />
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" opacity={0.3} />
-                            <Tooltip
-                                contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '8px', color: '#fff' }}
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                            <XAxis
+                                dataKey="year"
+                                stroke="#64748b"
+                                tick={{ fill: '#64748b', fontSize: 14, fontWeight: 500 }}
+                                tickLine={false}
+                                axisLine={false}
+                                dy={10}
                             />
-                            <Area type="monotone" dataKey="turnover" stroke="#f59e0b" fillOpacity={1} fill="url(#colorTurnover)" strokeWidth={3} />
-                        </AreaChart>
+                            <YAxis
+                                stroke="#64748b"
+                                tick={{ fill: '#64748b', fontSize: 13 }}
+                                tickLine={false}
+                                axisLine={false}
+                                domain={[0, 140]}
+                            />
+                            <Tooltip
+                                cursor={{ fill: 'rgba(0,0,0,0.02)' }}
+                                contentStyle={{
+                                    backgroundColor: '#fff',
+                                    border: 'none',
+                                    borderRadius: '8px',
+                                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                                    padding: '12px'
+                                }}
+                                formatter={(value) => [`₹ ${value} Cr`, 'Turnover']}
+                            />
+                            <Bar
+                                dataKey="turnover"
+                                fill="url(#colorBar)"
+                                radius={[8, 8, 0, 0]}
+                                barSize={60}
+                                animationDuration={1500}
+                            >
+                                <LabelList dataKey="turnover" position="top" fill="#64748b" fontSize={14} fontWeight={600} formatter={(val) => `${val} Cr`} />
+                            </Bar>
+                        </BarChart>
                     </ResponsiveContainer>
                 </div>
             </div>

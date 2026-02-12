@@ -28,7 +28,14 @@ export default function Navbar() {
                         <a href="#services" className={styles.link}>Services</a>
                         <a href="#about" className={styles.link}>About</a>
                         <a href="#contact" className={styles.link}>Contact</a>
-                        <button className={styles.cta}>Get Started</button>
+                        <a
+                            href="https://wa.me/919825535055"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.cta}
+                        >
+                            WhatsApp Us
+                        </a>
                     </div>
 
                     <button
