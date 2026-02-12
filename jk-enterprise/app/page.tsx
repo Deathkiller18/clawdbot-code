@@ -12,11 +12,11 @@ import WhyChooseUs from './components/WhyChooseUs';
 import StaffSupport from './components/StaffSupport';
 import TurnoverGraph from './components/TurnoverGraph';
 import Contact from './components/Contact';
-import Footer from './components/Footer';
+
 
 export default function Home() {
   return (
-    <main>
+    <>
       <Hero />
       <Experts />
       <VisionMission />
@@ -29,7 +29,6 @@ export default function Home() {
       <StaffSupport />
       <TurnoverGraph />
       <Contact />
-      <Footer />
-    </main>
+    </>
   );
 }
